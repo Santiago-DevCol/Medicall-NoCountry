@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue';
-
+import ProfilePaciente from './ProfilePaciente.vue';
+import AgendaPaciente from './AgendaPaciente.vue';
+import ConfigPaciente from './ConfigPaciente.vue';
 const title = 'Paciente';
+const componentName = ref('Profile')
+
+const dynamicComponent = computed(() => componentName.value === 'Profile' ? ProfilePaciente : componentName.value === 'Book' ? AgendaPaciente : ConfigPaciente)
 
 useHead({
   title,
@@ -12,8 +17,20 @@ useHead({
     }
   ]
 });
+
+const changeComponent = (component: string) => {
+  componentName.value = component
+}
 </script>
 
 <template>
-  <h1> Paciente </h1>
+  <div class="flex flex-col justify-center items-center">
+    <div>
+      <ProfileLayout @change="changeComponent" />
+    </div>
+    <keep-alive>
+      <component :is="dynamicComponent"></component>
+    </keep-alive>
+    <h1>{{ componentName }}</h1>
+  </div>
 </template>
