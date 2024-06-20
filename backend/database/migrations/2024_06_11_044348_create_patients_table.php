@@ -30,14 +30,17 @@ return new class extends Migration
 
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('type_id');
             $table->integer('num_id');
             $table->string('name');
             $table->string('last_name');
             $table->string('email');
-            $table->string('phone');
             $table->string('specialty');
             $table->string('professional_register');
+            $table->date('birth_date');
+            $table->string('gender');
+            $table->string('address');
+            $table->integer('consultationPrice');
+            $table->string('preRequirements');
             $table->timestamps();
         });
 
