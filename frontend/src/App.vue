@@ -1,8 +1,16 @@
 <script setup lang="ts">
 </script>
 <template>
-  <div class="w-screen">
     <DefaultLayout />
     <RouterView />
-  </div>
 </template>
+<style scoped>
+#app{
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+</style>

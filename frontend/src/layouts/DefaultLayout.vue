@@ -51,7 +51,7 @@ const items = ref([
             <RouterLink class="text-lg no-underline"
                 to="/contact">Contacto</RouterLink>
         </div>
-        <div class="flex justify-between items-center gap-2 md:px-6 font-medium">
+        <div class="flex justify-between items-center gap-2 md:px-2 font-medium">
             <div class="flex items-center gap-2">
                 <RouterLink
                     :class="!activateRegister ? 'px-2 bg-gray-0 rounded-md text-xl no-underline' : 'text-xl no-underline'"
@@ -72,7 +72,6 @@ const items = ref([
                 <Avatar v-if="userLoggedIn"
                     shape="circle"
                     size="large"
-                    class=""
                     :image="userLoggedIn.profile_photo_url" />
                 <MenuProfile ref="menuProfile"
                     :popup="true"
