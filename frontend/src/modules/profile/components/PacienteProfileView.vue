@@ -24,13 +24,12 @@ const changeComponent = (component: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col justify-center items-center">
+  <div class="flex flex-col justify-center items-center gap-2">
     <div>
       <ProfileLayout @change="changeComponent" />
     </div>
     <keep-alive>
       <component :is="dynamicComponent"></component>
     </keep-alive>
-    <h1>{{ componentName }}</h1>
   </div>
 </template>

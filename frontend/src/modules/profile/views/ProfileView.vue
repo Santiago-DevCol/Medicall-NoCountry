@@ -12,5 +12,7 @@ const customComponent = computed(() => currentUser.value?.type_profile === 1 ? P
 </script>
 
 <template>
-  <component :is="customComponent" />
+  <div class="h-[calc(100vh-10em)] overflow-hidden">
+    <component :is="customComponent" />
+  </div>
 </template>
