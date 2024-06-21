@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,7 +27,7 @@ class AuthController extends Controller
         }
         
         $user = User::create([
-            'name' => $request->name,
+            'name' => $request->name . ' ' . $request->lastName,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'type_profile' => $request->type_profile
@@ -46,6 +47,20 @@ class AuthController extends Controller
                 'allergy' => $request->allergy,
                 'personalHistory' => $request->personalHistory,
                 'familyHistory' => $request->familyHistory,
+            ]);
+        }else if($request->type_profile == 2){
+            $doctor = Doctor::create([
+                'name' => $request->name,
+                'last_name' => $request->lastName,
+                'gender' => $request->genero,
+                'num_id' => $request->personalId,
+                'email' => $request->email,
+                'birth_date' => $request->bornDate,
+                'address' => $request->address,
+                'specialty' => $request->specialties,
+                'consultationPrice' => $request->consultationPrice,
+                'professional_register' => $request-> professionalRegister,
+                'preRequirements' => $request-> professionalRegister
             ]);
         }
 

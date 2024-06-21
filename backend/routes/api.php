@@ -22,26 +22,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/login',function (Request $request) {
-    $user = User::where('email', $request->input('email'))->first();
-
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'message' => 'Credenciales incorrectas'
-        ], 401);
-    }
-
-    return response()->json([
-        'user' => [
-            'name' => $user->name,
-            'email' => $user->email,
-        ],
-        'tocken' => $user->createToken('api')->plainTextToken,
-    ]);
-});
-
-
-
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
