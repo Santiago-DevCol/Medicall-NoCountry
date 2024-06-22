@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import useAuthStore from '@/stores/useAuthStore';
 import { storeToRefs } from 'pinia';
-import Card from 'primevue/card';
 const store = useAuthStore();
 const { currentUser } = storeToRefs(store);
 const historial = ref([
