@@ -15,6 +15,7 @@ interface Video {
     muted: boolean;
     stream: MediaStream;
     isLocal: boolean;
+    shared: boolean;
 }
 
 export default defineComponent({
@@ -95,22 +96,22 @@ export default defineComponent({
         const socket = ref<Socket | null>(null)
         const status = ref<string>('disconnected')
 
-        const constraints: Contraints = {
+        const constraints: Contraints = reactive({
             video: enableVideo.value,
             audio: enableAudio.value
-        };
+        });
 
         if (cameraId.value && enableVideo.value) {
             constraints.video = { deviceId: { exact: cameraId.value } };
         }
 
         if (audioId.value && enableAudio.value) {
-            constraints.video = { deviceId: { exact: audioId.value } }
+            constraints.audio = { deviceId: { exact: audioId.value } }
         }
 
+        const { stream: sharedStream, start: startShared, stop: stopSheared, enabled: enabledShared } = useDisplayMedia()
         const { stream: localStream, start: startCall } = useUserMedia({ constraints })
-
-
+        console.log(enabledShared.value, 'enabledShared');
         const join = async () => {
 
             log('join');
@@ -121,7 +122,7 @@ export default defineComponent({
             startCall()
             // const localStream = await navigator.mediaDevices.getUserMedia(constraints);
             log('opened', localStream);
-            joinedRoom(localStream.value!, true);
+            joinedRoom(localStream!, true);
             signalClient.value.once('discover', (discoveryData) => {
                 log('discovered', discoveryData)
                 async function connectToPeer(peerID: string) {
@@ -129,7 +130,7 @@ export default defineComponent({
                     if (peerID === socket.value?.id) return;
                     try {
                         log('Connecting to peer', roomId.value);
-                        const { peer } = await signalClient.value?.connect(peerID, roomId.value, peerOptions) as ConnectionResult;
+                        const { peer } = await signalClient.value?.connect(peerID, roomId.value, peerOptions);
                         log('videolist', videoList?.value);
                         videoList.value.forEach(v => {
                             console.log(v, 'itemvideolist');
@@ -157,7 +158,7 @@ export default defineComponent({
             signalClient.value.discover(roomId?.value);
         }
 
-        const onPeer = (peer: SimplePeerInstance, localStream: MediaStream) => {
+        const onPeer = (peer: any, localStream: MediaStream) => {
             log('onPeer');
             peer.addStream(localStream);
             peer.on('stream', (remoteStream: MediaStream) => {
@@ -178,16 +179,18 @@ export default defineComponent({
             });
         }
 
-        const joinedRoom = (stream: MediaStream, isLocal: boolean) => {
+        const joinedRoom = (stream, isLocal: boolean, shared?: boolean) => {
             let found = videoList.value.find(video => {
-                return video.id === stream.id
+                return video.id === stream.value.id
             })
+            console.log(stream);
             if (found === undefined) {
                 let video: Video = {
-                    id: stream.id,
+                    id: stream.value.id,
                     muted: isLocal,
-                    stream: stream,
-                    isLocal: isLocal
+                    stream: stream.value,
+                    isLocal: isLocal,
+                    shared: shared ? shared : false
                 };
                 videoList.value.push(video);
             }
@@ -207,6 +210,7 @@ export default defineComponent({
 
         const leave = () => {
             status.value = 'disconnected'
+            stopSheared()
             videoList.value.forEach(v => v.stream.getTracks().forEach(t => t.stop()));
             videoList.value = [];
             signalClient.value?.peers().forEach(peer => peer.removeAllListeners())
@@ -234,22 +238,20 @@ export default defineComponent({
             ctx.value?.drawImage(video, 0, 0, canvas.value?.width, canvas.value?.height);
             return canvas;
         }
-        // const shareScreen = async () => {
-        //     if (navigator.mediaDevices == undefined) {
-        //         log('Error: https is required to load cameras');
-        //         return;
-        //     }
-
-        //     try {
-        //         const { stream: screenStream, start } = useDisplayMedia()
-        //         start()
-        //         joinedRoom(screenStream, true);
-        //         emit('share-started', screenStream.value?.id);
-        //         signalClient?.value.peers().forEach(p => onPeer(p, screenStream));
-        //     } catch (e) {
-        //         log('Media error: ' + JSON.stringify(e));
-        //     }
-        // }
+        const shareScreen = async () => {
+            if (navigator.mediaDevices == undefined) {
+                log('Error: https is required to load cameras');
+                return;
+            }
+            try {
+                startShared()
+                joinedRoom(sharedStream, true);
+                emit('share-started', sharedStream.value?.id);
+                signalClient?.value.peers().forEach(p => onPeer(p, sharedStream));
+            } catch (e) {
+                log('Media error: ' + JSON.stringify(e));
+            }
+        }
         const log = (message: string, data?: any) => {
             if (enableLogs.value) {
                 console.log(message);
@@ -275,7 +277,7 @@ export default defineComponent({
             join,
             leave,
             capture,
-            // shareScreen
+            shareScreen
         })
 
         return {

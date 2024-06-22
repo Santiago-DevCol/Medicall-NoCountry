@@ -7,7 +7,7 @@ const { push } = useRouter();
 const roomId = useRoute().query.roomId as string;
 
 const webrtc = ref<InstanceType<typeof VideoWebRTC> | null>(null);
-const mutedOn = ref(true);
+const mutedOn = ref(false);
 const videoOff = ref(false);
 // const preCall = ref<HTMLVideoElement | null>(null);
 
@@ -23,8 +23,8 @@ const {
   requestPermissions: true,
 })
 
-// const currentCamera = computed(() => videoInputs.value[0]?.deviceId)
-// const currentMicrophone = computed(() => audioInputs.value[0]?.deviceId)
+// selectedCamera.value = computed(() => videoInputs.value[0]?.deviceId).value;
+// selectedMicrophone.value = computed(() => audioInputs.value[0]?.deviceId).value;
 
 const listCamera = computed(() => videoInputs.value.map((item) => ({
   label: item.label,
@@ -62,24 +62,29 @@ const sharedScreen = () => {
   webrtc.value?.shareScreen();
 }
 
-watch(selectedCamera, (value: string) => {
-  contraints.video.deviceId = value;
-});
+// watch(selectedCamera, (value: string) => {
+//   contraints.video.deviceId = value;
+// });
 
-watch(selectedMicrophone, (value: string) => {
-  contraints.audio.deviceId = value;
-});
+// watch(selectedMicrophone, (value: string) => {
+//   contraints.audio.deviceId = value;
+// });
 
-watch(selectedSpeaker, (value: string) => {
-  preCall.value?.setSinkId(value);
-});
+// watch(selectedSpeaker, (value: string) => {
+//   preCall.value?.setSinkId(value);
+// });
 
-watchEffect(() => {
-  console.log(webrtc.value?.status, 'webrtc');
-})
+// watchEffect(() => {
+//   console.log(webrtc.value?.status, 'webrtc');
+// })
 // watchEffect(() => {
 //   start();
 // });
+
+// :enableVideo="videoOff"
+//         :enableAudio="mutedOn"
+//         :videoId="selectedCamera"
+//         :audioId="selectedMicrophone"
 </script>
 <template>
   <section class="flex flex-col justify-center items-center">
@@ -123,10 +128,6 @@ watchEffect(() => {
       <VideoWebRTC ref="webrtc"
         socketURL="https://api.crunux.tech/"
         cameraHeight="500"
-        :enableVideo="videoOff"
-        :enableAudio="mutedOn"
-        :videoId="selectedCamera"
-        :audioId="selectedMicrophone"
         :roomId
         :enableLogs="true" />
     </div>
@@ -143,7 +144,7 @@ watchEffect(() => {
         rounded
         @click="leave"
         class="m-2 py-2" />
-      <Button :severity="!mutedOn ? 'primary' : 'danger'"
+      <Button :severity="mutedOn ? 'primary' : 'danger'"
         icon="pi pi-microphone"
         rounded
         @click="mutedOn = !mutedOn"
