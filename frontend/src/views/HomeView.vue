@@ -2,6 +2,10 @@
 import Avatar from 'primevue/avatar';
 import { onUpdated } from 'vue';
 
+useHead({
+    title: 'Home'
+})
+
 const data = reactive([
     {
         especialidad: 'Cardiologia',

@@ -325,6 +325,14 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "getActiveHead": true,
+    "injectHead": true,
+    "useHead": true,
+    "useHeadSafe": true,
+    "useSeoMeta": true,
+    "useServerHead": true,
+    "useServerHeadSafe": true,
+    "useServerSeoMeta": true
   }
 }

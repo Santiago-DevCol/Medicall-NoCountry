@@ -1,11 +1,14 @@
 <script setup lang="ts">
+useHead({
+  titleTemplate: (title?: string) => !title ? 'Medicall' : `${title} | Medicall`
+})
 </script>
 <template>
-    <DefaultLayout />
-    <RouterView />
+  <DefaultLayout />
+  <RouterView />
 </template>
 <style scoped>
-#app{
+#app {
   width: 100vw;
   height: auto;
   display: flex;

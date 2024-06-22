@@ -7,6 +7,7 @@ import Components from 'unplugin-vue-components/vite';
 import AutoImport from 'unplugin-auto-import/vite'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { PrimeVueResolver } from 'unplugin-vue-components/resolvers';
+import { unheadVueComposablesImports } from '@unhead/vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,7 +24,7 @@ export default defineConfig({
         PrimeVueResolver()
       ],
       deep: true,
-      dirs: ['src/components', 'node_modules/primevue/src/components', 'src/modules', 'src/modules/**/*', 'node_modules/primeicons', 'src/layouts', 'node_modules/vee-validate', 'node_modules/@vueuse/core'],
+      dirs: ['src/components', 'node_modules/primevue/src/components', 'src/modules', 'src/modules/**/*', '@unhead/vue/components', 'node_modules/primeicons', 'src/layouts', 'node_modules/vee-validate', 'node_modules/@vueuse/core'],
       dts: true,
       types: [{
         from: 'vue-router',
@@ -51,6 +52,7 @@ export default defineConfig({
           imports: ['RouteLocationRaw'],
           type: true,
         },
+        unheadVueComposablesImports,
       ],
       dirs: ['./src', '@/stores'],
       vueTemplate: true,

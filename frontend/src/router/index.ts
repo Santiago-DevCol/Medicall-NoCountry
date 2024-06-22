@@ -30,7 +30,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */'../views/AboutView.vue'),
+      component: () => import(/* webpackChunkName: "about" */'../views/ServicesView.vue'),
       meta: {
         requireAuth: false
       }
@@ -41,7 +41,7 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */'../views/AboutView.vue'),
+      component: () => import(/* webpackChunkName: "about" */'../views/ContactView.vue'),
       meta: {
         requireAuth: false
       }
