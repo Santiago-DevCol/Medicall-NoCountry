@@ -9,63 +9,81 @@ const historial = ref([
         date: '2021-10-10 06:00',
         icon: 'pi pi-calendar',
         status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dr. Morillo',
+        especialidad: 'Ortopeda'
     },
     {
         title: 'Historial 2',
-        date: '2021-10-10 06:00',
+        date: '2021-10-08 17:00',
         icon: 'pi pi-calendar',
         status: 'pendiente',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dra. Fernandez',
+        especialidad: 'Psicologo'
     },
     {
         title: 'Historial 3',
-        date: '2021-10-10 06:00',
+        date: '2021-10-05 06:00',
         icon: 'pi pi-calendar',
         status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dr. Morillo',
+        especialidad: 'Ortopeda'
     },
     {
         title: 'Historial 4',
-        date: '2021-10-10 06:00',
+        date: '2021-10-11 06:00',
         icon: 'pi pi-calendar',
         status: 'danger',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dra. Fernandez',
+        especialidad: 'Psicologo'
     },
     {
         title: 'Historial 5',
         date: '2021-10-10 06:00',
         icon: 'pi pi-calendar',
         status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dr. Henriquez',
+        especialidad: 'Cardiologo'
     },
     {
         title: 'Historial 6',
         date: '2021-10-10 06:00',
         icon: 'pi pi-calendar',
         status: 'pendiente',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dra. Rodriguez',
+        especialidad: 'Nutriologo'
     },
     {
         title: 'Historial 7',
-        date: '2021-10-10 06:00',
+        date: '2021-10-10 15:00',
         icon: 'pi pi-calendar',
         status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dra. Rodriguez',
+        especialidad: 'Nutriologo'
     },
     {
         title: 'Historial 8',
-        date: '2021-10-10 06:00',
+        date: '2021-10-10 11:00',
         icon: 'pi pi-calendar',
         status: 'danger',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dr. Henriquez',
+        especialidad: 'Cardiologo'
     },
     {
         title: 'Historial 9',
-        date: '2021-10-10 06:00',
+        date: '2021-10-10 14:00',
         icon: 'pi pi-calendar',
         status: 'success',
-        content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+        content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
+        doctor: 'Dr',
+        especialidad: 'Nutriologo'
     }
 ])
 </script>
@@ -119,15 +137,24 @@ const historial = ref([
                                             :class="[slotProps.item.icon, slotProps.item.status === 'success' ? 'primary' : 'danger']"></i>
                                     </template>
                                     <template #content="slotProps">
-                                        <Card style="height: 10rem">
+                                        <Card style="height: auto">
                                             <template #title>
                                                 {{ slotProps.item.title }}
                                             </template>
                                             <template #subtitle>
-                                                {{ slotProps.item.date }}
+                                                <div class="flex flex-col">
+                                                    <span>{{ useDateFormat(slotProps.item.date, 'D/MM/YY h:mm A').value
+                                                        }}</span>
+                                                    <span
+                                                        :class="slotProps.item.status === 'success' ? 'primary' : 'danger'">{{
+                                                            slotProps.item.status }}</span>
+                                                </div>
                                             </template>
                                             <template #content>
-                                                {{ slotProps.item.content }}
+                                                <div class="flex flex-col">
+                                                    <span>{{ slotProps.item.doctor }}</span>
+                                                    <span>{{ slotProps.item.especialidad }}</span>
+                                                </div>
                                             </template>
                                         </Card>
                                     </template>
