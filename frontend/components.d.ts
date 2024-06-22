@@ -55,6 +55,7 @@ declare module 'vue' {
     StepperPanel: typeof import('primevue/stepperpanel')['default']
     TabMenu: typeof import('primevue/tabmenu')['default']
     Textarea: typeof import('primevue/textarea')['default']
+    Timeline: typeof import('primevue/timeline')['default']
     VideoCallView: typeof import('./src/modules/videocall/views/VideoCallView.vue')['default']
     VideoWebRTC: typeof import('./src/modules/videocall/components/VideoWebRTC.vue')['default']
     VideoWebRTCSetup: typeof import('./src/modules/videocall/components/VideoWebRTCSetup.vue')['default']

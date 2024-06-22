@@ -1,8 +1,74 @@
 <script setup lang="ts">
 import useAuthStore from '@/stores/useAuthStore';
 import { storeToRefs } from 'pinia';
+import Card from 'primevue/card';
 const store = useAuthStore();
 const { currentUser } = storeToRefs(store);
+const historial = ref([
+    {
+        title: 'Historial 1',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'success',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 2',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'pendiente',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 3',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'success',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 4',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'danger',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 5',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'success',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 6',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'pendiente',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 7',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'success',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 8',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'danger',
+        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    },
+    {
+        title: 'Historial 9',
+        date: '2021-10-10 06:00',
+        icon: 'pi pi-calendar',
+        status: 'success',
+        content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec'
+    }
+])
 </script>
 <template>
     <div class="justify-center items-center m-0 p-0 w-11/12 bg-transparent">
@@ -25,33 +91,51 @@ const { currentUser } = storeToRefs(store);
             </template>
             <template #main>
                 <div class="w-full flex p-4 gap-4">
-                    <Card style="width: 30rem;">
-                        <template #title>
-                            Personal
-                        </template>
-                        <template #content>
-                            <div v-for="con in 5"
-                                :key="con">{{ con }}</div>
-                        </template>
-                    </Card>
-                    <Card style="width: 30rem;">
-                        <template #title>
-                            Diagnosticos
-                        </template>
-                        <template #content>
-                            <div v-for="con in 5"
-                                :key="con">{{ con }}</div>
-                        </template>
-                    </Card>
-                    <Card style="width: 30rem; height: 40rem;">
-                        <template #title>
-                            Historial
-                        </template>
-                        <template #content>
-                            <div v-for="con in 5"
-                                :key="con">{{ con }}</div>
-                        </template>
-                    </Card>
+                    <div class="text-center text-[#334155] gap-2">
+                        <h3 class="font-semibold text-2xl">Personal</h3>
+                        <Card style="width: 30rem;">
+                            <template #content>
+                                <div v-for="con in 5"
+                                    :key="con">{{ con }}</div>
+                            </template>
+                        </Card>
+                    </div>
+                    <div class="text-center gap-2">
+                        <h3 class="font-semibold text-[#334155] text-2xl">Diagnosticos</h3>
+                        <Card style="width: 30rem;">
+                            <template #content>
+                                <div v-for="con in 5"
+                                    :key="con">{{ con }}</div>
+                            </template>
+                        </Card>
+                    </div>
+                    <div class="text-center gap-2">
+                        <h3 class="font-semibold text-[#334155] text-2xl">Historial</h3>
+                        <Card style="width: 30rem; height: 40rem; overflow-y: scroll;">
+                            <template #content>
+                                <Timeline :value="historial"
+                                    align="alternate">
+                                    <template #marker="slotProps">
+                                        <i
+                                            :class="[slotProps.item.icon, slotProps.item.status === 'success' ? 'primary' : 'danger']"></i>
+                                    </template>
+                                    <template #content="slotProps">
+                                        <Card style="height: 10rem">
+                                            <template #title>
+                                                {{ slotProps.item.title }}
+                                            </template>
+                                            <template #subtitle>
+                                                {{ slotProps.item.date }}
+                                            </template>
+                                            <template #content>
+                                                {{ slotProps.item.content }}
+                                            </template>
+                                        </Card>
+                                    </template>
+                                </Timeline>
+                            </template>
+                        </Card>
+                    </div>
                 </div>
             </template>
             <template #footer>
