@@ -43,6 +43,7 @@ export default {
         'surface-950': 'rgb(var(--surface-950))',
         'gray-0': '#d9d9d9',
         'gray-1': '#707070',
+        'blue-25':'#334155',
       }
     },
   },

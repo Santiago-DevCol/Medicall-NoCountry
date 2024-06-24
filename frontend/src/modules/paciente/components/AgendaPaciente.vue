@@ -17,103 +17,13 @@ const { push } = useRouter()
 
 interface CitaDatabase {
     id: number | string;
-    nombre: string;
+    medico: string;
     fechaHora: string;
     pacienteId: string;
     medicoId: string;
     estado: string;
+    especialidad: string;
 }
-
-const citasDatabase = ref<CitaDatabase[]>([
-    {
-        id: '3494lkk3k32',
-        fechaHora: '2024-12-19 12:00',
-        pacienteId: '14',
-        medicoId: '6',
-        nombre: 'Ana maria',
-        estado: 'pendiente',
-    },
-    {
-        id: '3494lkk3k32',
-        fechaHora: '2024-12-20 09:00',
-        pacienteId: '3459',
-        medicoId: '6',
-        nombre: 'Juan',
-        estado: 'pendiente',
-    },
-    {
-        id: 3,
-        fechaHora: '2024-12-21 14:00',
-        pacienteId: '64',
-        medicoId: '6',
-        nombre: 'Pedro',
-        estado: 'pendiente',
-    },
-    {
-        id: 4,
-        fechaHora: '2024-12-22 12:00',
-        pacienteId: '14',
-        medicoId: '6',
-        nombre: 'Maria',
-        estado: 'pendiente',
-    },
-    {
-        id: '3494lkk3k32',
-        fechaHora: '2024-12-23 17:00',
-        pacienteId: '9402',
-        medicoId: '6',
-        nombre: 'Jose',
-        estado: 'pendiente',
-    },
-    {
-        id: '3494lkk3k32',
-        fechaHora: '2024-12-24 12:00',
-        pacienteId: '3494lkk3k32',
-        medicoId: '6',
-        nombre: 'Luis Enrique',
-        estado: 'pendiente',
-    },
-    {
-        id: 7,
-        fechaHora: '2024-12-25 08:00',
-        pacienteId: '5461',
-        medicoId: '6',
-        nombre: 'Carlos Martinez',
-        estado: 'pendiente',
-    },
-    {
-        id: 8,
-        fechaHora: '2024-12-26 11:00',
-        pacienteId: '106',
-        medicoId: '6',
-        nombre: 'Josefa Rodriguez',
-        estado: 'pendiente',
-    },
-    {
-        id: 9,
-        fechaHora: '2024-12-27 09:00',
-        pacienteId: '1',
-        medicoId: '6',
-        nombre: 'Juan Perez',
-        estado: 'pendiente',
-    },
-    {
-        id: 10,
-        fechaHora: '2024-12-28 14:00',
-        pacienteId: '2343',
-        medicoId: '6',
-        nombre: 'Mariela Perez',
-        estado: 'pendiente',
-    },
-    {
-        id: 11,
-        fechaHora: '2024-12-29 16:00',
-        pacienteId: '348',
-        medicoId: '6',
-        nombre: 'Aderson Perez',
-        estado: 'pendiente',
-    }
-])
 
 
 interface Cita {
@@ -125,6 +35,66 @@ interface Cita {
 }
 const cita = ref<CitaDatabase | null>(null)
 const citas = ref<Cita[]>([])
+const today = ref(new Date().toISOString().split('T')[0])
+
+const citasDatabase = ref<CitaDatabase[]>([
+    {
+        id: '3494lkk3k32',
+        fechaHora: '2024-08-19 12:00',
+        pacienteId: '14',
+        medicoId: '6',
+        medico: 'Dra. Grullon',
+        estado: 'pendiente',
+        especialidad: 'Ortopeda'
+    },
+    {
+        id: '3494lkk3k37',
+        fechaHora: `${today.value}  09:00`,
+        pacienteId: '3459',
+        medicoId: '6',
+        medico: 'Dr. Guzman',
+        estado: 'pendiente',
+        especialidad: 'Cardiologo'
+    },
+    {
+        id: 3,
+        fechaHora: '2024-06-21 14:00',
+        pacienteId: '64',
+        medicoId: '6',
+        medico: 'Dr. Pichardo',
+        estado: 'pendiente',
+        especialidad: 'Dermatologo'
+    },
+    {
+        id: 4,
+        fechaHora: '2024-07-22 12:00',
+        pacienteId: '14',
+        medicoId: '6',
+        medico: 'Dra. Alciviades',
+        estado: 'pendiente',
+        especialidad: 'Medico General'
+    },
+    {
+        id: 7,
+        fechaHora: `${today.value} 08:00`,
+        pacienteId: '5461',
+        medicoId: '6',
+        medico: 'Dr. Martinez',
+        estado: 'pendiente',
+        especialidad: 'Ginecologo'
+    },
+    {
+        id: 8,
+        fechaHora: '2024-06-27 11:00',
+        pacienteId: '106',
+        medicoId: '6',
+        medico: 'Dr. Rodriguez',
+        estado: 'pendiente',
+        especialidad: 'Nutricionista'
+    },
+
+])
+
 
 citas.value = citasDatabase.value.map(cita => {
     const fecha = cita.fechaHora.split(' ')[0]
@@ -132,15 +102,14 @@ citas.value = citasDatabase.value.map(cita => {
     const hora = `${fecha} ${new Date(date.setHours(date.getHours() + 1)).toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit', hour12: false }).replace('.', ':').replace(' ', 'am')}`
     return {
         id: cita.id,
-        title: `Cita con ${cita.nombre}`,
+        title: `Cita con ${cita.medico}`,
         start: cita.fechaHora,
         end: hora,
     }
 })
 
-
 const calendarApp = createCalendar({
-    selectedDate: '2024-12-20',
+    selectedDate: today.value,
     views: [viewMonthGrid, viewMonthAgenda, viewWeek, viewDay],
     defaultView: viewWeek.name,
     events: citas.value,
@@ -161,20 +130,26 @@ const startCall = () => {
 }
 </script>
 <template>
-    <div class="flex justify-center w-full gap-4">
-        <Card style="width: 20rem; overflow: hidden; padding: 4px;">
+    <div class="flex justify-center w-full gap-4 overflow-auto">
+        <Card style="width: auto; height: auto; overflow: auto; padding: 4px;">
             <template #title>
-                Iniciar Cita
+                <h3 class="text-center text-blue-25">Iniciar Cita</h3>
             </template>
             <template #content>
-                <div v-if="cita">
-                    <h4>{{ cita.nombre }}</h4>
-                    <p>{{ cita.fechaHora }}</p>
-                    <p>{{ cita.estado }}</p>
+                <div class="lg:w-72 flex flex-col items-center">
+                    <div v-if="cita"
+                        class="w-30 gap-4">
+                        <h3 class="block m-1">{{ cita.medico }}</h3>
+                        <h4 class="block m-1">{{ cita.especialidad }}</h4>
+                        <p>Fecha de Cita: <span>{{ useDateFormat(cita.fechaHora, 'D/MM/YY HH:mm A').value }}</span></p>
+                        <p>Estado: <span>{{ cita.estado }}</span></p>
+                    </div>
+                    <div>
+                        <Button :disabled="!cita"
+                            label="Iniciar video llamada"
+                            @click="startCall" />
+                    </div>
                 </div>
-                <Button :disabled="!cita"
-                    label="Iniciar video llamada"
-                    @click="startCall"></Button>
             </template>
         </Card>
         <div id="calendar"

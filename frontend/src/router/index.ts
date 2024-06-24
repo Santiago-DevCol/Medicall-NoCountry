@@ -85,7 +85,7 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: () => import(/* webpackChunkName: "profile"*/ '../modules/profile/views/ProfileView.vue'),
+      component: () => import(/* webpackChunkName: "profile"*/ '../views/ProfileView.vue'),
       meta: {
         requireAuth: true
       }

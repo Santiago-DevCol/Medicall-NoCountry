@@ -5,7 +5,7 @@ const store = useAuthStore();
 const { currentUser } = storeToRefs(store);
 const historial = ref([
     {
-        title: 'Historial 1',
+        title: 'Cita con Ortopeda',
         date: '2021-10-10 06:00',
         icon: 'pi pi-calendar',
         status: 'success',
@@ -40,51 +40,29 @@ const historial = ref([
         doctor: 'Dra. Fernandez',
         especialidad: 'Psicologo'
     },
+
+])
+
+const historialMedico = ref([
     {
-        title: 'Historial 5',
-        date: '2021-10-10 06:00',
-        icon: 'pi pi-calendar',
-        status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
-        doctor: 'Dr. Henriquez',
-        especialidad: 'Cardiologo'
+        especialidad: 'Ortopeda',
+        medico: 'Dr. Morillo',
+        fecha: '2021-10-10 06:00',
+        diagnostico: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
     },
     {
-        title: 'Historial 6',
-        date: '2021-10-10 06:00',
-        icon: 'pi pi-calendar',
-        status: 'pendiente',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
-        doctor: 'Dra. Rodriguez',
-        especialidad: 'Nutriologo'
+        especialidad: 'Psicologo',
+        medico: 'Dra. Fernandez',
+        fecha: '2021-10-08 17:00',
+        diagnostico: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
     },
     {
-        title: 'Historial 7',
-        date: '2021-10-10 15:00',
-        icon: 'pi pi-calendar',
-        status: 'success',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
-        doctor: 'Dra. Rodriguez',
-        especialidad: 'Nutriologo'
+        especialidad: 'Ortopeda',
+        medico: 'Dr. Morillo',
+        fecha: '2021-10-05 06:00',
+        diagnostico: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec jnfwdnjiwdjwdicwdhicijwdcncdjwcjn ud jasndjsndjkasndjkasnjdk  sajdnasjdnjaskndjkasndjks asjdnjsndjksandjksnjkd ksajdnjsn jas njdkas',
     },
-    {
-        title: 'Historial 8',
-        date: '2021-10-10 11:00',
-        icon: 'pi pi-calendar',
-        status: 'danger',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
-        doctor: 'Dr. Henriquez',
-        especialidad: 'Cardiologo'
-    },
-    {
-        title: 'Historial 9',
-        date: '2021-10-10 14:00',
-        icon: 'pi pi-calendar',
-        status: 'success',
-        content: 'lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec',
-        doctor: 'Dr',
-        especialidad: 'Nutriologo'
-    }
+
 ])
 </script>
 <template>
@@ -103,32 +81,48 @@ const historial = ref([
                 <Divider />
                 <div class="w-full flex flex-col justify-start rounded-lg flex-1">
                     <span class="p-2">{{ currentUser?.email }}</span>
-                    <span class="p-2">{{ currentUser?.created_at }}</span>
+                    <span class="p-2">{{ useDateFormat(currentUser?.created_at, 'D/MM/YY HH:mm A').value }}</span>
                 </div>
             </template>
             <template #main>
-                <div class="w-full flex p-4 gap-4">
-                    <div class="text-center text-[#334155] gap-2">
-                        <h3 class="font-semibold text-2xl">Personal</h3>
-                        <Card style="width: 30rem;">
+                <div class="w-full flex flex-col lg:flex-row p-4 gap-4">
+                    <div class=" flex flex-col items-center gap-2">
+                        <h3 class="font-semibold text-2xl text-blue-25 ">Personal</h3>
+                        <Card style="width: 30rem; height: 40rem;">
                             <template #content>
-                                <div v-for="con in 5"
-                                    :key="con">{{ con }}</div>
+                                <div class="flex flex-col">
+                                    <span>{{ currentUser?.name }}</span>
+                                    <span>{{ currentUser?.email }}</span>
+                                    <span>{{ useDateFormat(currentUser?.created_at, 'D/MM/YY HH:mm A').value }}</span>
+                                </div>
                             </template>
                         </Card>
                     </div>
-                    <div class="text-center gap-2">
-                        <h3 class="font-semibold text-[#334155] text-2xl">Diagnosticos</h3>
-                        <Card style="width: 30rem;">
+                    <div class="flex flex-col items-center gap-2">
+                        <h3 class="font-semibold text-blue-25 text-2xl">Historial Medico</h3>
+                        <Card style="width: 30rem; height: 40rem; overflow-y: auto;">
                             <template #content>
-                                <div v-for="con in 5"
-                                    :key="con">{{ con }}</div>
+                                <div class="gap-2 overflow-y-auto">
+                                    <Card style="margin: 2px auto 2px;"
+                                        v-for="(diagnosty, index) in historialMedico"
+                                        :key="index">
+                                        <template #title>
+                                            <span>{{ diagnosty.especialidad }}</span>
+                                        </template>
+                                        <template #subtitle>
+                                            <div class="gap-4">
+                                                <span class="block">{{ diagnosty.medico }}</span>
+                                                <p>{{ diagnosty.diagnostico }}</p>
+                                            </div>
+                                        </template>
+                                    </Card>
+                                </div>
                             </template>
                         </Card>
                     </div>
-                    <div class="text-center gap-2">
-                        <h3 class="font-semibold text-[#334155] text-2xl">Historial</h3>
-                        <Card style="width: 30rem; height: 40rem; overflow-y: scroll;">
+                    <div class="flex flex-col items-center gap-2">
+                        <h3 class="font-semibold text-blue-25 text-2xl">Historial de Consultas</h3>
+                        <Card style="width: 30rem; height: 40rem; overflow-y: auto;">
                             <template #content>
                                 <Timeline :value="historial"
                                     align="alternate">
@@ -139,15 +133,17 @@ const historial = ref([
                                     <template #content="slotProps">
                                         <Card style="height: auto">
                                             <template #title>
-                                                {{ slotProps.item.title }}
+                                                <span class="font-semibold text-sm">{{ slotProps.item.title }}</span>
                                             </template>
                                             <template #subtitle>
                                                 <div class="flex flex-col">
-                                                    <span>{{ useDateFormat(slotProps.item.date, 'D/MM/YY h:mm A').value
-                                                        }}</span>
-                                                    <span
-                                                        :class="slotProps.item.status === 'success' ? 'primary' : 'danger'">{{
-                                                            slotProps.item.status }}</span>
+                                                    <span class="text-sm">
+                                                        {{ useDateFormat(slotProps.item.date, 'D/MM/YY h:mm A').value }}
+                                                    </span>
+                                                    <span class="text-sm"
+                                                        :class="slotProps.item.status === 'success' ? 'primary' : 'danger'">
+                                                        {{ slotProps.item.status }}
+                                                    </span>
                                                 </div>
                                             </template>
                                             <template #content>

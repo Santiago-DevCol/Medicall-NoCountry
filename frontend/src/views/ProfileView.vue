@@ -4,7 +4,7 @@ import useAuthStore from '@/stores/useAuthStore';
 import { storeToRefs } from 'pinia';
 import AdminProfileView from '@/modules/admin/views/AdminProfileView.vue'
 import MedicoProfileView from '@/modules/medico/views/MedicosProfileView.vue'
-import PacienteProfileView from '@/modules/profile/components/PacienteProfileView.vue'
+import PacienteProfileView from '@/modules/paciente/views/PacienteProfileView.vue'
 
 const store = useAuthStore()
 const { currentUser } = storeToRefs(store)
@@ -12,7 +12,7 @@ const customComponent = computed(() => currentUser.value?.type_profile === 1 ? P
 </script>
 
 <template>
-  <div class="h-[calc(100vh-10em)] overflow-hidden">
+  <div class="lg:h-[calc(100vh-8em)] overflow-auto">
     <component :is="customComponent" />
   </div>
 </template>

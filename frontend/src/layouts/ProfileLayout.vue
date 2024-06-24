@@ -32,7 +32,7 @@ const items = ref([
                 <a v-ripple
                     v-bind="props.action"
                     @click="emit('change', item.component)"
-                    class="items-center">
+                    class="items-center text-blue-25">
                     <span class="font-bold">{{ item.label }}</span>
                 </a>
             </template>
