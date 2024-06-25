@@ -64,42 +64,54 @@ const historialMedico = ref([
     },
 
 ])
+
+const personalInfo = reactive({
+    alergias: ['mani', 'aspirinas', 'polen de la flor de sol'],
+    antecedentesFamiliar: 'Ipertencion',
+    antecedentesPersonal: 'Lesion Espalda'
+})
 </script>
 <template>
     <div class="justify-center items-center m-0 p-0 w-11/12 bg-transparent">
         <ProfileMainLayout>
-            <template #aside>
-                <div class="w-full flex flex-col justify-center items-center flex-1 gap-2">
-                    <img :src="currentUser?.profile_photo_url"
-                        class="rounded-full w-36" />
-                    <span class=" font-semibold text-2xl">{{ currentUser?.name }}</span>
-                    <span>
-                        {{ currentUser?.type_profile === 1 ? 'Paciente' : currentUser?.type_profile === 2 ? 'Doctor'
-                            : 'Admin' }}
-                    </span>
-                </div>
-                <Divider />
-                <div class="w-full flex flex-col justify-start rounded-lg flex-1">
-                    <span class="p-2">{{ currentUser?.email }}</span>
-                    <span class="p-2">{{ useDateFormat(currentUser?.created_at, 'D/MM/YY HH:mm A').value }}</span>
-                </div>
-            </template>
             <template #main>
-                <div class="w-full flex flex-col lg:flex-row p-4 gap-4">
+                <div class="w-full flex flex-col justify-center items-center lg:flex-row p-4 gap-4">
                     <div class=" flex flex-col items-center gap-2">
                         <h3 class="font-semibold text-2xl text-blue-25 ">Personal</h3>
                         <Card style="width: 30rem; height: 40rem;">
                             <template #content>
-                                <div class="flex flex-col">
-                                    <span>{{ currentUser?.name }}</span>
-                                    <span>{{ currentUser?.email }}</span>
-                                    <span>{{ useDateFormat(currentUser?.created_at, 'D/MM/YY HH:mm A').value }}</span>
+                                <div class="flex flex-col gap-4">
+                                    <div class="w-full flex flex-col justify-center items-center flex-1 gap-2">
+                                        <img :src="currentUser?.profile_photo_url"
+                                            class="rounded-full w-36" />
+                                        <span class=" font-semibold text-2xl">{{ currentUser?.name }}</span>
+                                        <span>
+                                            {{ currentUser?.type_profile === 1 ? 'Paciente' : currentUser?.type_profile
+                                            === 2 ? 'Doctor'
+                                            : 'Admin' }}
+                                        </span>
+                                    </div>
+                                    <Panel class="gap-2"
+                                        header="Alergias">
+                                        <Tag v-for="(tag, index) in personalInfo.alergias"
+                                            :key="index"
+                                            :value="tag"
+                                            style="font-size: 14px;"
+                                            severity="secondary"
+                                            rounded />
+                                    </Panel>
+                                    <Panel header="Antecedentes Personales">
+                                        <p>{{ personalInfo.antecedentesPersonal }}</p>
+                                    </Panel>
+                                    <Panel header="Antecedentes Familiares">
+                                        <p>{{ personalInfo.antecedentesFamiliar }}</p>
+                                    </Panel>
                                 </div>
                             </template>
                         </Card>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="font-semibold text-blue-25 text-2xl">Historial Medico</h3>
+                        <h3 class="font-semibold text-blue-25 text-2xl">Historial Medico/Diagnosticos</h3>
                         <Card style="width: 30rem; height: 40rem; overflow-y: auto;">
                             <template #content>
                                 <div class="gap-2 overflow-y-auto">
@@ -107,13 +119,13 @@ const historialMedico = ref([
                                         v-for="(diagnosty, index) in historialMedico"
                                         :key="index">
                                         <template #title>
-                                            <span>{{ diagnosty.especialidad }}</span>
+                                            <span> {{ diagnosty.medico }}</span>
                                         </template>
                                         <template #subtitle>
-                                            <div class="gap-4">
-                                                <span class="block">{{ diagnosty.medico }}</span>
-                                                <p>{{ diagnosty.diagnostico }}</p>
-                                            </div>
+                                            <span>{{ diagnosty.especialidad }}</span>
+                                        </template>
+                                        <template #content>
+                                            <p>{{ diagnosty.diagnostico }}</p>
                                         </template>
                                     </Card>
                                 </div>

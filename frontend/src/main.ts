@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import PrimeVue from 'primevue/config';
 import FocusTrap from 'primevue/focustrap';
+import Ripple from 'primevue/ripple'
 import AnimateOnScroll from 'primevue/animateonscroll';
 import Tooltip from 'primevue/tooltip';
 import { createHead } from '@unhead/vue'
@@ -25,5 +26,6 @@ app.use(PrimeVue, { ripple: true })
 app.directive('focustrap', FocusTrap);
 app.directive('animateonscroll', AnimateOnScroll);
 app.directive('tooltip', Tooltip);
+app.directive('ripple', Ripple);
 
 app.mount('#app')

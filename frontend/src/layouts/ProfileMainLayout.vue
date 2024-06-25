@@ -19,10 +19,10 @@
 #container {
     display: grid;
     grid-template-areas:
-        "aside main main"
-        "aside main main"
+        "main main main"
+        "main main main"
         "footer footer footer";
-    grid-template-columns: minmax(25px, 250px) 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr auto;
 }
 </style>

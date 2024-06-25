@@ -16,7 +16,7 @@ const changeComponent = (component: string) => {
 <template>
   <div class="flex flex-col justify-center items-center gap-2">
     <div>
-      <ProfileLayout @change="changeComponent" />
+      <SelectMenuProfile @change="changeComponent" />
     </div>
     <keep-alive>
       <component :is="dynamicComponent"></component>

@@ -32,7 +32,7 @@ const changeComponent = (component: string) => {
 }
 </script>
 <template>
-    <ProfileLayout @change="changeComponent" />
+    <SelectMenuProfile @change="changeComponent" />
     <section>
         <div class="container">
             <div class="row">
@@ -43,7 +43,7 @@ const changeComponent = (component: string) => {
             </div>
         </div>
         <keep-alive>
-            <component :is="dynamicComponent"/>
+            <component :is="dynamicComponent" />
         </keep-alive>
     </section>
 </template>
